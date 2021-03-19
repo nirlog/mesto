@@ -1,0 +1,6 @@
+.element__body {
+  padding: 25px 21px 31px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+}
