@@ -1,5 +1,5 @@
 let popup = document.querySelector('.popup');
-let popupBtnOpen = document.querySelector('.popup__btn-open');
+let popupBtnOpen = document.querySelector('.popup-btn-open');
 let popupBtnClose = popup.querySelector('.popup__close');
 
 function popupOpen() {
