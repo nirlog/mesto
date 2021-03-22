@@ -4,4 +4,9 @@
   width: 24px;
   height: 24px;
   margin-left: 18px;
+  transition: opacity .25s linear;
+}
+
+.profile__button-edit:hover {
+  opacity: 0.6;
 }

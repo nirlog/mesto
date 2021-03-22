@@ -1,0 +1,11 @@
+.form__input_type_submit {
+  min-height: 50px;
+  background-color: #000000;
+  color: #ffffff;
+  border-radius: 2px;
+  transition: opacity .25s linear;
+}
+
+.form__input_type_submit:hover {
+  opacity: 0.8;
+}
