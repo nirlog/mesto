@@ -20,60 +20,59 @@
         <div class="profile__info">
           <div class="profile__title">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button class="profile__button-edit popup-btn-open">
-              <img src="./images/edit-button.svg" alt=" кнопка редактирования товара">
-            </button>
+            <button type="button" class="profile__button-edit"></button>
           </div>
           <p class="profile__about-me">Исследователь океана</p>
         </div>
-        <button class="profile__button-add"><img src="./images/add-button.svg" alt="Кнопка добавления фотографии"></button>
+        <button type="button" class="profile__button-add"></button>
       </section>
       <section class="elements">
         <article class="element">
           <img class="element__picture" src="./images/karachaevsk.png" alt="Карачаевск">
+          <!-- у картинок есть прозрачные углы, поэтому выбран формат png -->
           <div class="element__body">
-            <h3 class="element__title">Карачаевск</h3>
-            <a class="element__like"></a>
+            <h2 class="element__title">Карачаевск</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </article>
 
         <article class="element">
           <img class="element__picture" src="./images/gora-elbrus.png" alt="Гора Эльбрус">
           <div class="element__body">
-            <h3 class="element__title">Гора Эльбрус</h3>
-            <a class="element__like element__like_active"></a>
+            <h2 class="element__title">Гора Эльбрус</h2>
+            <button type="button" class="element__like element__like_active"></button>
           </div>
         </article>
 
         <article class="element">
           <img class="element__picture" src="./images/dombaj.png" alt="Домбай">
           <div class="element__body">
-            <h3 class="element__title">Домбай</h3>
-            <a class="element__like"></a>
+            <h2 class="element__title">Домбай</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </article>
 
         <article class="element">
           <img class="element__picture" src="./images/gora-elbrus.png" alt="Гора Эльбрус">
           <div class="element__body">
-            <h3 class="element__title">Гора Эльбрус</h3>
-            <a class="element__like"></a>
+            <h2 class="element__title">Гора Эльбрус</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </article>
 
         <article class="element">
           <img class="element__picture" src="./images/dombaj.png" alt="Домбай">
           <div class="element__body">
-            <h3 class="element__title">Домбай</h3>
-            <a class="element__like"></a>
+            <h2 class="element__title">Домбай</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </article>
 
         <article class="element">
           <img class="element__picture" src="./images/karachaevsk.png" alt="Карачаево-Черкесия">
           <div class="element__body">
-            <h3 class="element__title">Карачаево-Черкесия</h3>
-            <a class="element__like"></a>
+            <h2 class="element__title">Карачаево-Черкесия</h2>
+            <button type="button" class="element__like"></button>
           </div>
         </article>
       </section>
@@ -84,22 +83,19 @@
   </div>
   <div class="popup">
     <div class="popup__container">
-      <div class="popup__close"></div>
-      <form class="form form-profile" action="#">
+      <button type="button" class="popup__close"></button>
+      <form name="profile-editor" class="form" action="#">
         <h3 class="form__title">Редактировать профиль</h3>
         <fieldset class="form__enter-block">
-          <input class="form__input form__input_type_text" name="name" type="text" value="">
-          <input class="form__input form__input_type_text" name="about-me" type="text" value="">
+          <input class="form__input-text" name="name" type="text" placeholder="ФИО">
+          <input class="form__input-text" name="about-me" type="text" placeholder="Описание">
         </fieldset>
         <fieldset class="form__btn-block">
-          <input class="form__input form__input_type_submit" type="submit" value="Сохранить">
+          <button class="form__submit" type="submit">Сохранить</button>
         </fieldset>
       </form>
     </div>
   </div>
   <script src="./scripts/popup.js"></script>
-  <script src="./scripts/form-profile.js"></script>
-  <script src="./scripts/element__like.js"></script>
-
 </body>
 </html>

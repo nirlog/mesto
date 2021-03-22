@@ -1,11 +1,11 @@
-.form__enter-block {
+.form__btn-block {
   border: 0;
   padding: 18px 0 0;
   margin: 0;
 }
 
 @media screen and (max-width: 500px) {
-  .form__enter-block {
-    padding-top: 45px;
+  .form__btn-block {
+    padding-top: 14px;
   }
 }

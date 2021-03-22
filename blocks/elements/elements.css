@@ -8,3 +8,9 @@
   padding-top: 50px;
   justify-content: center;
 }
+
+@media screen and (max-width: 880px) {
+  .elements {
+    padding-top: 35px;
+  }
+}
