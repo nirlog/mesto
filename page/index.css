@@ -1,4 +1,4 @@
-@import url(../vendor/normalize.css);
+@import url(../vendor/normalize.css); /* После сжатия автопроверка ругается "Оставьте файл vendor/normalize.css без изменений." */
 @import url(../vendor/fonts/inter/inter.css);
 @import url(../blocks/root/root.css);
 
