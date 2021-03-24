@@ -8,11 +8,11 @@ let inputName = form.querySelector('input[name="name"]');
 let inputAboutMe = form.querySelector('input[name="about-me"]');
 
 function popupClose() {
-  popup.classList.remove('popup__opened');
+  popup.classList.remove('popup_opened');
 }
 
 function editProfile(name, about) {
-  popup.classList.add('popup__opened');
+  popup.classList.add('popup_opened');
   inputName.value = name.textContent;
   inputAboutMe.value = about.textContent;
 };

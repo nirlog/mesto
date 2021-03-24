@@ -4,6 +4,7 @@
   height: 19px;
   font-size: 0;
   border: 0;
+  background-color: transparent;
   background-image: url(../../../images/like.svg);
   transition: opacity .25s linear;
   cursor: pointer;

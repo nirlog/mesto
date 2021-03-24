@@ -1,4 +1,5 @@
 .profile__button-edit {
+  flex-shrink: 0;
   border: 1px solid #FFFFFF;
   background: transparent;
   width: 24px;
