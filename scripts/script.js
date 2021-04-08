@@ -27,7 +27,7 @@ buttonsClosePopup.forEach(function(btnClosePopup){
 const profileEdit = document.querySelector('.profile__button-edit');
 const profileName = document.querySelector('.profile__name');
 const profileAboutMe = document.querySelector('.profile__about-me');
-const formProfile = document.querySelector('.form__profile-editor');
+const formProfile = document.querySelector('.form_type_profile-editor');
 const inputName = formProfile.querySelector('input[name="name"]');
 const inputAboutMe = formProfile.querySelector('input[name="about-me"]');
 
@@ -120,7 +120,7 @@ initialCards.forEach((item) => addElements(item));
 
 
 /* Add elements */
-const formAddElement = document.querySelector('.form__add-element');
+const formAddElement = document.querySelector('.form_type_add-element');
 const inputLocation = formAddElement.querySelector('input[name="location"]');
 const inputLink = formAddElement.querySelector('input[name="link"]');
 
