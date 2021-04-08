@@ -112,6 +112,7 @@ function addElements(item){
 
 function openPicture(id, src, title){
   id.querySelector('.pictures-block__img').setAttribute('src', src);
+  id.querySelector('.pictures-block__img').setAttribute('alt', title);
   id.querySelector('.pictures-block__title').textContent = title;
 }
 
