@@ -56,7 +56,7 @@ function addElements(item){
   });
 
   elemPicture.addEventListener('click', function() {
-    openPicture(elemPicture.getAttribute('src'), elemName);
+    openPicture(elemPicture.getAttribute('src'), elemName.textContent);
     openPopup(popupPicture);
   });
   elements.prepend(elem);
