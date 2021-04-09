@@ -47,17 +47,17 @@ function addElements(item){
   elemPicture.alt = item.name;
   elemPicture.src = item.link;
 
-  elemButtonLike.addEventListener('click', function(evt){
+  elemButtonLike.addEventListener('click', function(evt) {
     evt.target.classList.toggle('element__like_active');
   });
 
-  elemButtonRemove.addEventListener('click', function(evt){
+  elemButtonRemove.addEventListener('click', function(evt) {
     evt.target.closest('.element').remove();
   });
 
-  elemPicture.addEventListener('click', function (){
-    openPopup(popupPicture);
+  elemPicture.addEventListener('click', function() {
     openPicture(elemPicture.getAttribute('src'), elemName);
+    openPopup(popupPicture);
   });
   elements.prepend(elem);
 }
