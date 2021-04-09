@@ -20,11 +20,11 @@
         <div class="profile__info">
           <div class="profile__title">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
-            <button type="button" data-popup="profileEditor" class="profile__button-edit"></button>
+            <button type="button" class="profile__button-edit"></button>
           </div>
           <p class="profile__about-me">Исследователь океана</p>
         </div>
-        <button type="button" data-popup="addElement" class="profile__button-add"></button>
+        <button type="button" class="profile__button-add"></button>
       </section>
       <section class="elements">
 
@@ -35,7 +35,7 @@
     </footer>
   </div>
 
-  <div class="popup popup_type_form" id="profileEditor">
+  <div class="popup popup_type_form" id="popup_profile-editor">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <form name="profile-editor" class="form form_type_profile-editor" action="#">
@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <div class="popup popup_type_form" id="addElement">
+  <div class="popup popup_type_form" id="popup_add-element">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <form name="add-element" class="form form_type_add-element" action="#">
@@ -67,7 +67,7 @@
     </div>
   </div>
 
-  <div class="popup popup_type_picture" id="popup_pic">
+  <div class="popup popup_type_picture" id="popup_picture">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <figure class="pictures-block">
@@ -79,7 +79,7 @@
 
   <template id="element">
     <article class="element">
-      <img class="element__picture" data-popup="popup_pic" src="./images/no-image.jpg" alt="картинка отсутствует">
+      <img class="element__picture" src="./images/no-image.jpg" alt="картинка отсутствует">
       <div class="element__body">
         <h2 class="element__title"></h2>
         <button type="button" class="element__like"></button>
@@ -88,6 +88,7 @@
     </article>
   </template>
 
+  <script src="./scripts/initial-сards.js"></script>
   <script src="./scripts/script.js"></script>
 </body>
 </html>
