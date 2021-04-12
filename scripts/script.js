@@ -22,21 +22,18 @@ const inputLocation = formAddElement.querySelector('input[name="location"]');
 const inputLink = formAddElement.querySelector('input[name="link"]');
 
 
-function openPopup(popup){
-  popup.classList.add('popup_opened');
-}
 
-function closePopup(popup){
-  popup.classList.remove('popup_opened');
-}
+const openPopup = (popup) => popup.classList.add('popup_opened');
 
-function openPicture(link, title){
-  popupPictureElementImage.setAttribute('src', link);
+const closePopup = (popup) => popup.classList.remove('popup_opened');
+
+const openPicture = (link, title) => {
+  popupPictureElementImage.src = link;
   popupPictureElementImage.setAttribute('alt', title);
   popupPictureElementTitle.textContent = title;
 }
 
-function addElements(item){
+const addElements = (item) => {
   const elem = elemTemplate.querySelector('.element').cloneNode(true);
   const elemName = elem.querySelector('.element__title');
   const elemPicture = elem.querySelector('.element__picture');
@@ -47,56 +44,47 @@ function addElements(item){
   elemPicture.alt = item.name;
   elemPicture.src = item.link;
 
-  elemButtonLike.addEventListener('click', function(evt) {
-    evt.target.classList.toggle('element__like_active');
-  });
-
-  elemButtonRemove.addEventListener('click', function(evt) {
-    evt.target.closest('.element').remove();
-  });
-
-  elemPicture.addEventListener('click', function() {
-    openPicture(elemPicture.getAttribute('src'), elemName.textContent);
+  elemButtonLike.addEventListener('click', (evt) => evt.target.classList.toggle('element__like_active'));
+  elemButtonRemove.addEventListener('click', (evt) => evt.target.closest('.element').remove());
+  elemPicture.addEventListener('click', () => {
+    openPicture(elemPicture.src, elemName.textContent);
     openPopup(popupPicture);
   });
-  elements.prepend(elem);
+  return elem;
 }
 
-function formSubmitAddElement(nameLocation, linkPicture) {
+const createElement = (elem) => elements.prepend(addElements(elem));
+
+const formSubmitAddElement = (nameLocation, linkPicture) => {
   let newLocation = {
     name: nameLocation,
     link: linkPicture
   };
-  addElements(newLocation);
+  createElement(newLocation);
 }
 
 
-formProfile.addEventListener('submit', function(evt){
+
+formProfile.addEventListener('submit', (evt) => {
   evt.preventDefault();
   profileName.textContent = inputName.value;
   profileAboutMe.textContent = inputAboutMe.value;
   closePopup(popupProfileEditor);
 });
 
-buttonPopupProfileEditor.addEventListener('click', function(){
+buttonPopupProfileEditor.addEventListener('click', () => {
   inputName.value = profileName.textContent;
   inputAboutMe.value = profileAboutMe.textContent;
   openPopup(popupProfileEditor);
 });
 
-buttonsClosePopup.forEach(function(btnClosePopup){
-  btnClosePopup.addEventListener('click', function(evt){
-    closePopup(evt.target.closest('.popup'));
-  });
-});
+buttonsClosePopup.forEach((btnClosePopup) => btnClosePopup.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup'))));
 
-buttonPopupAddElement.addEventListener('click', function(){
-  openPopup(popupAddElement);
-});
+buttonPopupAddElement.addEventListener('click', () => openPopup(popupAddElement));
 
-initialCards.forEach((item) => addElements(item));
+initialCards.forEach((item) => createElement(item));
 
-formAddElement.addEventListener('submit', function(evt){
+formAddElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
   formSubmitAddElement(inputLocation.value, inputLink.value);
   formAddElement.reset();
