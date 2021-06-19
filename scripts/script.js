@@ -21,16 +21,60 @@ const formAddElement = document.querySelector('.form_type_add-element');
 const inputLocation = formAddElement.querySelector('input[name="location"]');
 const inputLink = formAddElement.querySelector('input[name="link"]');
 
+const formList = Array.from(document.querySelectorAll('.form'));
 
 
-const openPopup = (popup) => popup.classList.add('popup_opened');
+const keydownClosePopup = (evt) => {
+  if(evt.key === 'Escape'){
+    closePopup(document.querySelector('.popup_opened'));
+  }
+};
 
-const closePopup = (popup) => popup.classList.remove('popup_opened');
+const openPopup = (popup) => {
+  popup.classList.add('popup_opened');
+  popup.addEventListener('click', (evt) => {
+    if(evt.target === popup) {
+      closePopup(popup);
+    }
+  });
+  document.addEventListener('keydown', keydownClosePopup);
+}
+
+const closePopup = (popup) => {
+  popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', keydownClosePopup);
+
+}
+
 
 const openPicture = (link, title) => {
   popupPictureElementImage.src = link;
   popupPictureElementImage.setAttribute('alt', title);
   popupPictureElementTitle.textContent = title;
+}
+
+const openFormProfileEditing = () => {
+  inputName.value = profileName.textContent;
+  inputAboutMe.value = profileAboutMe.textContent;
+  const formProfileEditor = popupProfileEditor.querySelector('.form');
+  const formProfile = {
+    formElement: formProfileEditor,
+    inputList: Array.from(formProfileEditor.querySelectorAll('.form__input')),
+    buttonForm: formProfileEditor.querySelector('.form__submit'),
+    errorList: Array.from(formProfileEditor.querySelectorAll('.form__error')),
+    errorClassInput:'form__input_type_error'
+  };
+  clearValidation(formProfile['inputList'], formProfile['errorClassInput'], formProfile['errorList']);
+  toggleButtonState(formProfile['inputList'], formProfile['buttonForm']);
+  openPopup(popupProfileEditor);
+
+}
+
+const handlerFormProfileEditing = (evt) => {
+  evt.preventDefault();
+  profileName.textContent = inputName.value;
+  profileAboutMe.textContent = inputAboutMe.value;
+  closePopup(popupProfileEditor);
 }
 
 const addElements = (item) => {
@@ -53,40 +97,37 @@ const addElements = (item) => {
   return elem;
 }
 
-const createElement = (elem) => elements.prepend(addElements(elem));
+const createElement = (warp, data) => warp.prepend(addElements(data));
 
-const formSubmitAddElement = (nameLocation, linkPicture) => {
+const handlerFormAddElement = (evt) => {
+  evt.preventDefault();
   let newLocation = {
-    name: nameLocation,
-    link: linkPicture
+    name: inputLocation.value,
+    link: inputLink.value
   };
-  createElement(newLocation);
-}
-
-
-
-formProfile.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  profileName.textContent = inputName.value;
-  profileAboutMe.textContent = inputAboutMe.value;
-  closePopup(popupProfileEditor);
-});
-
-buttonPopupProfileEditor.addEventListener('click', () => {
-  inputName.value = profileName.textContent;
-  inputAboutMe.value = profileAboutMe.textContent;
-  openPopup(popupProfileEditor);
-});
-
-buttonsClosePopup.forEach((btnClosePopup) => btnClosePopup.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup'))));
-
-buttonPopupAddElement.addEventListener('click', () => openPopup(popupAddElement));
-
-initialCards.forEach((item) => createElement(item));
-
-formAddElement.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  formSubmitAddElement(inputLocation.value, inputLink.value);
+  createElement(elements, newLocation);
   formAddElement.reset();
   closePopup(popupAddElement);
+}
+
+initialCards.forEach((item) => createElement(elements, item));
+buttonPopupProfileEditor.addEventListener('click', openFormProfileEditing);
+formProfile.addEventListener('submit', handlerFormProfileEditing);
+buttonPopupAddElement.addEventListener('click', () => openPopup(popupAddElement));
+formAddElement.addEventListener('submit', handlerFormAddElement);
+buttonsClosePopup.forEach((btnClosePopup) => btnClosePopup.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup'))));
+
+
+formList.forEach((formElement) => {
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+  });
+  const form = {
+    formElement: formElement,
+    inputList: Array.from(formElement.querySelectorAll('.form__input')),
+    buttonForm: formElement.querySelector('.form__submit'),
+    errorClassSpan: 'form__error',
+    errorClassInput:'form__input_type_error'
+  };
+  enableValidation(form);
 });

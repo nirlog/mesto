@@ -38,11 +38,13 @@
   <div class="popup popup_type_form" id="popup_profile-editor">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
-      <form name="profile-editor" class="form form_type_profile-editor" action="#">
+      <form name="profile-editor" class="form form_type_profile-editor" action="#" novalidate>
         <h3 class="form__title">Редактировать профиль</h3>
         <fieldset class="form__enter-block">
-          <input class="form__input-text" name="name" type="text" placeholder="ФИО">
-          <input class="form__input-text" name="about-me" type="text" placeholder="Описание">
+          <input class="form__input" name="name" type="text" minlength="2" maxlength="40" placeholder="ФИО" required>
+          <span class="form__error form__error-name"></span>
+          <input class="form__input" name="about-me" type="text" minlength="2" maxlength="200" placeholder="Описание" required>
+          <span class="form__error form__error-about-me"></span>
         </fieldset>
         <fieldset class="form__btn-block">
           <button class="form__submit" type="submit">Сохранить</button>
@@ -54,14 +56,16 @@
   <div class="popup popup_type_form" id="popup_add-element">
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
-      <form name="add-element" class="form form_type_add-element" action="#">
+      <form name="add-element" class="form form_type_add-element" action="#" novalidate>
         <h3 class="form__title">Новое место</h3>
         <fieldset class="form__enter-block">
-          <input class="form__input-text" name="location" type="text" placeholder="Название">
-          <input class="form__input-text" name="link" type="text" placeholder="Ссылка на картинку">
+          <input class="form__input" name="location" type="text" minlength="2" maxlength="30" placeholder="Название" required>
+          <span class="form__error form__error-location"></span>
+          <input class="form__input" name="link" type="url" placeholder="Ссылка на картинку" required>
+          <span class="form__error form__error-link"></span>
         </fieldset>
         <fieldset class="form__btn-block">
-          <button class="form__submit" type="submit">Сохранить</button>
+          <button class="form__submit" type="submit" disabled>Сохранить</button>
         </fieldset>
       </form>
     </div>
@@ -89,6 +93,7 @@
   </template>
 
   <script src="./scripts/initial-сards.js"></script>
+  <script src="./scripts/validate.js"></script>
   <script src="./scripts/script.js"></script>
 </body>
 </html>
