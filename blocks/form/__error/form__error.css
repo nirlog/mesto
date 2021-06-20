@@ -1,5 +1,6 @@
 .form__error {
   font-size: 12px;
-  line-height: 15px;
+  line-height: 14px;
   color: #FF0000;
+  margin-top: 5px;
 }

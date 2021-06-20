@@ -1,4 +1,4 @@
-.element__remove {
+.card__remove {
   position: absolute;
   top: 18px;
   right: 15px;
@@ -17,6 +17,6 @@
   transition: opacity .25s linear;
 }
 
-.element__remove:hover {
+.card__remove:hover {
   opacity: .6;
 }
