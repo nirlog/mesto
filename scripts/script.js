@@ -121,6 +121,7 @@ const handlerFormAddCard = (evt) => {
   };
   addCards(cards, newLocation);
   formAddCard.reset();
+  formAddCardProperties['buttonForm'].setAttribute('disabled', true);
   closePopup(popupAddCard);
 }
 
