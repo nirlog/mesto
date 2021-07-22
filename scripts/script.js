@@ -35,8 +35,8 @@ const formAddCardProperties = {
   inputLocation: formAddCard.querySelector('input[name="location"]'),
   inputLink: formAddCard.querySelector('input[name="link"]')
 };
-const popupPictureCardImage = popupPicture.querySelector('.pictures-block__img');
-const popupPictureCardTitle = popupPicture.querySelector('.pictures-block__title');
+// const popupPictureCardImage = popupPicture.querySelector('.pictures-block__img');
+// const popupPictureCardTitle = popupPicture.querySelector('.pictures-block__title');
 const formList = Array.from(document.querySelectorAll('.form'));
 const profileFormValidation = new ValidationForm(profileFormProperties);
 
@@ -58,7 +58,7 @@ const keydownClosePopup = (evt) => {
   }
 };
 
-const openPopup = (popup) => {
+export const openPopup = (popup) => {
   popup.classList.add('popup_opened');
   popup.addEventListener('click', clickOverlay);
   document.addEventListener('keydown', keydownClosePopup);
@@ -71,11 +71,11 @@ const closePopup = (popup) => {
 
 }
 
-const openPicture = (link, title) => {
-  popupPictureCardImage.src = link;
-  popupPictureCardImage.setAttribute('alt', title);
-  popupPictureCardTitle.textContent = title;
-}
+// const openPicture = (link, title) => {
+//   popupPictureCardImage.src = link;
+//   popupPictureCardImage.setAttribute('alt', title);
+//   popupPictureCardTitle.textContent = title;
+// }
 
 const openFormProfileEditing = () => {
   profileFormProperties['inputName'].value = profileName.textContent;
@@ -98,7 +98,7 @@ const handlerFormAddCard = (evt) => {
     name: formAddCardProperties['inputLocation'].value,
     link: formAddCardProperties['inputLink'].value
   };
-  const card = new Card(newLocation, cardTemplate);
+  const card = new Card(newLocation, cardTemplate, popupPicture);
 
   cards.prepend(card.generateCard());
   formAddCard.reset();

@@ -1,9 +1,11 @@
+import {openPopup} from './script.js';
+
 export class Card {
   constructor(item, cardSelector, popupCardPicture){
     this.name = item.name;
     this.link = item.link;
-    this._popupPicture = popupCardPicture;
     this._cardSelector = cardSelector;
+    this._popupPicture = popupCardPicture;
   }
 
   _getTemplate(){
@@ -13,12 +15,19 @@ export class Card {
       .cloneNode(true);
     return cardElement;
   }
+  _openPicture(){
+    const popupPictureCardImage = this._popupPicture.querySelector('.pictures-block__img');
+    const popupPictureCardTitle = this._popupPicture.querySelector('.pictures-block__title');
+    popupPictureCardImage.src = this.link;
+    popupPictureCardImage.setAttribute('alt', this.name);
+    popupPictureCardTitle.textContent = this.name;
+  }
 
   _setEventListeners(){
     this._cardButtonLike.addEventListener('click', () => this._cardButtonLike.classList.toggle('card__like_active'));
-    this._cardButtonRemove.addEventListener('click', () => this._cardButtonRemove.closest('.card').remove());
+    this._cardButtonRemove.addEventListener('click', () => this._element.remove());
       this._cardPicture.addEventListener('click', () => {
-        openPicture(this.link, this.name);
+        this._openPicture();
         openPopup(this._popupPicture);
       });
   }
