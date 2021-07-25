@@ -9,6 +9,7 @@
   border: 0;
   outline: none;
   transition: opacity .25s linear;
+  cursor: pointer;
 }
 
 .form__submit:hover {
@@ -20,6 +21,7 @@
   color: #000000;
   opacity: 0.2;
   border: 1px solid #000000;
+  cursor: default;
 }
 
 @media screen and (max-width: 500px) {

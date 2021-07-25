@@ -43,6 +43,10 @@ profileFormValidation.enableValidation();
 
 new ValidationForm(formAddCardProperties).enableValidation();
 
+const creatingСard = (item) => {
+  return new Card(item, cardTemplate, popupPicture);
+};
+
 const clickOverlay = (evt) => {
   const popupOpened = document.querySelector('.popup_opened');
   if(evt.target === popupOpened) {
@@ -90,17 +94,14 @@ const handlerFormAddCard = (evt) => {
     name: formAddCardProperties['inputLocation'].value,
     link: formAddCardProperties['inputLink'].value
   };
-  const card = new Card(newLocation, cardTemplate, popupPicture);
-
-  cards.prepend(card.generateCard());
+  cards.prepend(creatingСard(newLocation).generateCard());
   formAddCard.reset();
-  formAddCardProperties['buttonForm'].setAttribute('disabled', true);
+  formAddCardProperties['buttonForm'].setAttribute('disabled', true); //не вижу приемуществ в использовании класса, если атрибут прекрасно работает
   closePopup(popupAddCard);
 }
 
 initialCards.forEach((item) => {
-  const card = new Card(item, cardTemplate, popupPicture);
-  cards.prepend(card.generateCard());
+  cards.prepend(creatingСard(item).generateCard());
 });
 
 buttonPopupProfileEditor.addEventListener('click', openFormProfileEditing);

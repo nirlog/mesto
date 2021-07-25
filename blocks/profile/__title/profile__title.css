@@ -1,5 +1,6 @@
 .profile__title {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: baseline;
 }
 

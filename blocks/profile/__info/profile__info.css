@@ -1,5 +1,7 @@
 .profile__info {
   text-align: left;
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
 @media screen and (max-width: 880px) {
