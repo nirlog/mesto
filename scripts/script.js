@@ -1,5 +1,5 @@
-import {Card} from './card.js';
-import {ValidationForm} from './validate.js';
+import {Card} from './Card.js';
+import {ValidationForm} from './Validate.js';
 import {initialCards} from './initial-сards.js'
 export {openPopup};
 
