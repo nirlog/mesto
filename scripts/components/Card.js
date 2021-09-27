@@ -1,6 +1,6 @@
-import {openPopup} from './script.js';
+import {openPopup} from '../script.js';
 
-export class Card {
+export default class Card {
   constructor(item, cardSelector, popupCardPicture){
     this.name = item.name;
     this.link = item.link;
@@ -43,7 +43,6 @@ export class Card {
     this._cardName.textContent = this.name;
     this._cardPicture.alt = this.name;
     this._cardPicture.src = this.link;
-
     return this._element;
   }
 }

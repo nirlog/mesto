@@ -1,41 +1,28 @@
-import {Card} from './Card.js';
-import {ValidationForm} from './Validate.js';
-import {initialCards} from './initial-сards.js';
+import {
+  cards,
+  cardTemplate,
+  popupPicture,
+  popupAddCard,
+  popupProfileEditor,
+  buttonPopupProfileEditor,
+  buttonPopupAddCard,
+  profileName,
+  profileAboutMe,
+  formProfile,
+  formAddCard,
+  buttonsClosePopup,
+  profileFormProperties,
+  formAddCardProperties,
+
+  closeKey
+} from './utils/constants.js';
+import Card from './components/Card.js';
+import ValidationForm from './components/ValidationForm.js';
+import {initialCards} from './utils/initial-сards.js';
+import Section from './components/Section.js';
 export {openPopup};
 
-const popupProfileEditor = document.querySelector('#popup_profile-editor');
-const popupAddCard = document.querySelector('#popup_add-card');
-const popupPicture = document.querySelector('#popup_picture');
-const buttonPopupProfileEditor = document.querySelector('.profile__button-edit');
-const buttonPopupAddCard = document.querySelector('.profile__button-add');
-const buttonsClosePopup = document.querySelectorAll('.popup__close');
-const closeKey = 'Escape';
-const profileName = document.querySelector('.profile__name');
-const profileAboutMe = document.querySelector('.profile__about-me');
-const formProfile = document.querySelector('.form_type_profile-editor');
-const profileFormProperties = {
-  formElement: formProfile,
-  inputList: Array.from(formProfile.querySelectorAll('.form__input')),
-  buttonForm: formProfile.querySelector('.form__submit'),
-  errorClassSpan: 'form__error',
-  errorClassInput:'form__input_type_error',
-  errorList: Array.from(formProfile.querySelectorAll('.form__error')),
-  inputName: formProfile.querySelector('input[name="name"]'),
-  inputAboutMe: formProfile.querySelector('input[name="about-me"]')
-};
-const cards = document.querySelector('.cards');
-const cardTemplate = '#card';
-const formAddCard = document.querySelector('.form_type_add-card');
-const formAddCardProperties = {
-  formElement: formAddCard,
-  inputList: Array.from(formAddCard.querySelectorAll('.form__input')),
-  buttonForm: formAddCard.querySelector('.form__submit'),
-  errorClassSpan: 'form__error',
-  errorClassInput:'form__input_type_error',
-  errorList: Array.from(formAddCard.querySelectorAll('.form__error')),
-  inputLocation: formAddCard.querySelector('input[name="location"]'),
-  inputLink: formAddCard.querySelector('input[name="link"]')
-};
+
 const profileFormValidation = new ValidationForm(profileFormProperties);
 
 
@@ -46,6 +33,8 @@ new ValidationForm(formAddCardProperties).enableValidation();
 const creatingСard = (item) => {
   return new Card(item, cardTemplate, popupPicture);
 };
+
+
 
 const clickOverlay = (evt) => {
   const popupOpened = document.querySelector('.popup_opened');
@@ -88,15 +77,24 @@ const handlerFormProfileEditing = (evt) => {
   closePopup(popupProfileEditor);
 }
 
+
 const handlerFormAddCard = (evt) => {
   evt.preventDefault();
-  const newLocation = {
+  const newLocation = [{
     name: formAddCardProperties['inputLocation'].value,
     link: formAddCardProperties['inputLink'].value
-  };
-  cards.prepend(creatingСard(newLocation).generateCard());
+  }];
+  const addNewLocation = new Section ({
+    items: newLocation,
+    renderer: (item) => {
+      const creatingNewCard = new Card (item, cardTemplate, popupPicture);
+      const cardElement = creatingNewCard.generateCard();
+      addNewLocation.addItem(cardElement);
+    }
+  }, cards);
+  addNewLocation.renderItems();
   formAddCard.reset();
-  formAddCardProperties['buttonForm'].setAttribute('disabled', true); //не вижу приемуществ в использовании класса, если атрибут прекрасно работает
+  formAddCardProperties['buttonForm'].setAttribute('disabled', true);
   closePopup(popupAddCard);
 }
 
@@ -113,3 +111,4 @@ buttonPopupAddCard.addEventListener('click', () => openPopup(popupAddCard));
 formAddCard.addEventListener('submit', handlerFormAddCard);
 
 buttonsClosePopup.forEach((btnClosePopup) => btnClosePopup.addEventListener('click', (evt) => closePopup(evt.target.closest('.popup'))));
+

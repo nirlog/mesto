@@ -1,4 +1,4 @@
-export class ValidationForm {
+export default class ValidationForm {
   constructor (from){
     this._from = from;
     this.inputList = this._from['inputList'];
