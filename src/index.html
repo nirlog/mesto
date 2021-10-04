@@ -6,7 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mesto</title>
-  <link rel="stylesheet" href="./page/index.css">
 </head>
 
 <body class="root">
@@ -16,7 +15,7 @@
     </header>
     <main class="content">
       <section class="profile">
-        <img src="./images/profile.jpg" alt="Фотография Жак-Ив Кусто" class="profile__avatar">
+        <img src="<%=require('./images/profile.jpg')%>" alt="Фотография Жак-Ив Кусто" class="profile__avatar">
         <div class="profile__info">
           <div class="profile__title">
             <h1 class="profile__name">Жак-Ив Кусто</h1>
@@ -79,7 +78,7 @@
     <div class="popup__container">
       <button type="button" class="popup__close"></button>
       <figure class="pictures-block">
-        <img class="pictures-block__img" src="./images/no-image.jpg" alt="картинка отсутствует">
+        <img class="pictures-block__img" src="<%=require('./images/no-image.jpg')%>" alt="картинка отсутствует">
         <figcaption class="pictures-block__title"></figcaption>
       </figure>
     </div>
@@ -87,7 +86,7 @@
 
   <template id="card">
     <article class="card">
-      <img class="card__picture" src="./images/no-image.jpg" alt="картинка отсутствует">
+      <img class="card__picture" src="<%=require('./images/no-image.jpg')%>" alt="картинка отсутствует">
       <div class="card__body">
         <h2 class="card__title"></h2>
         <button type="button" class="card__like"></button>
@@ -95,8 +94,5 @@
       <button type="button" class="card__remove"></button>
     </article>
   </template>
-
-  <!-- <script src="./scripts/constants.js"></script> -->
-  <script type="module" src="./scripts/script.js"></script>
 </body>
 </html>

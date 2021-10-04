@@ -8,7 +8,6 @@ import {
   buttonPopupAddCard,
   profileName,
   profileAboutMe,
-  formProfile,
   formAddCard,
   profileFormProperties,
   formAddCardProperties
@@ -17,7 +16,6 @@ import Card from './components/Card.js';
 import ValidationForm from './components/ValidationForm.js';
 import {initialCards} from './utils/initial-сards.js';
 import Section from './components/Section.js';
-import Popup from './components/Popup.js';
 import PopupWithForm from './components/PopupWithForm.js';
 import UserInfo from './components/UserInfo.js';
 
