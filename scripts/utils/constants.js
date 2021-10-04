@@ -4,9 +4,9 @@ export const popupPicture = document.querySelector('#popup_picture');
 export const buttonPopupProfileEditor = document.querySelector('.profile__button-edit');
 export const buttonPopupAddCard = document.querySelector('.profile__button-add');
 export const buttonsClosePopup = document.querySelectorAll('.popup__close');
-export const closeKey = 'Escape';
-export const profileName = document.querySelector('.profile__name');
-export const profileAboutMe = document.querySelector('.profile__about-me');
+export const ESCAPE_KEY = 'Escape';
+export const profileName = '.profile__name';
+export const profileAboutMe = '.profile__about-me';
 export const formProfile = document.querySelector('.form_type_profile-editor');
 export const profileFormProperties = {
   formElement: formProfile,
@@ -16,7 +16,7 @@ export const profileFormProperties = {
   errorClassInput:'form__input_type_error',
   errorList: Array.from(formProfile.querySelectorAll('.form__error')),
   inputName: formProfile.querySelector('input[name="name"]'),
-  inputAboutMe: formProfile.querySelector('input[name="about-me"]')
+  inputAboutMe: formProfile.querySelector('input[name="aboutMe"]')
 };
 export const cards = document.querySelector('.cards');
 export const cardTemplate = '#card';

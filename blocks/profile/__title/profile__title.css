@@ -1,7 +1,8 @@
 .profile__title {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto auto;
   align-items: baseline;
+  justify-content: start;
 }
 
 @media screen and (max-width: 880px) {

@@ -1,11 +1,11 @@
-import {openPopup} from '../script.js';
+import PopupWithImage from "./PopupWithImage.js";
 
 export default class Card {
-  constructor(item, cardSelector, popupCardPicture){
+  constructor(item, cardSelector, popupCardSelector){
     this.name = item.name;
     this.link = item.link;
     this._cardSelector = cardSelector;
-    this._popupPicture = popupCardPicture;
+    this._popupWithImage = new PopupWithImage(popupCardSelector,{nameImage: item.name, linkImage: item.link});
   }
 
   _getTemplate(){
@@ -16,20 +16,13 @@ export default class Card {
     return cardElement;
   }
   _openPicture(){
-    const popupPictureCardImage = this._popupPicture.querySelector('.pictures-block__img');
-    const popupPictureCardTitle = this._popupPicture.querySelector('.pictures-block__title');
-    popupPictureCardImage.src = this.link;
-    popupPictureCardImage.setAttribute('alt', this.name);
-    popupPictureCardTitle.textContent = this.name;
+    this._popupWithImage.open();
   }
 
   _setEventListeners(){
     this._cardButtonLike.addEventListener('click', () => this._cardButtonLike.classList.toggle('card__like_active'));
     this._cardButtonRemove.addEventListener('click', () => this._element.remove());
-      this._cardPicture.addEventListener('click', () => {
-        this._openPicture();
-        openPopup(this._popupPicture);
-      });
+    this._cardPicture.addEventListener('click', this._openPicture.bind(this));
   }
 
   generateCard() {
