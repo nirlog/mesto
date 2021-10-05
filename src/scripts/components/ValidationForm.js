@@ -7,6 +7,7 @@ export default class ValidationForm {
     this.errorClassInput = this._from['errorClassInput'];
     this.buttonForm = this._from['buttonForm'];
     this.errorList = this._from['errorList'];
+    this._inactiveButtonClass = this._from['inactiveButtonClass'];
   }
 
   _showInputError(inputElement, errorClass, errorMessage) {
@@ -34,11 +35,21 @@ export default class ValidationForm {
     })
   }
 
+  disableButtonForm(){
+    this.buttonForm.setAttribute('disabled', true);
+    this.buttonForm.classList.add(this._inactiveButtonClass);
+  }
+  activateButtonForm(){
+    this.buttonForm.removeAttribute('disabled');
+    this.buttonForm.classList.remove(this._inactiveButtonClass);
+
+  }
+
   _toggleButtonState(){
     if (this._hasInvalidInput(this.inputList)) {
-      this.buttonForm.setAttribute('disabled', true);
+      this.disableButtonForm();
     } else {
-      this.buttonForm.removeAttribute('disabled');
+      this.activateButtonForm();
     }
   }
 

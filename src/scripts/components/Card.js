@@ -1,11 +1,10 @@
-import PopupWithImage from "./PopupWithImage.js";
-
 export default class Card {
-  constructor(item, cardSelector, popupCardSelector){
+  constructor(item, cardSelector, popupWithImage){
     this.name = item.name;
     this.link = item.link;
     this._cardSelector = cardSelector;
-    this._popupWithImage = new PopupWithImage(popupCardSelector,{nameImage: item.name, linkImage: item.link});
+    this._popupWithImage = popupWithImage;
+
   }
 
   _getTemplate(){
@@ -16,12 +15,21 @@ export default class Card {
     return cardElement;
   }
   _openPicture(){
-    this._popupWithImage.open();
+
+    this._popupWithImage.open({nameImage:this.name, linkImage:this.link});
+  }
+
+  _liked(){
+    this._cardButtonLike.classList.toggle('card__like_active');
+  }
+
+  _removeElement(){
+    this._element.remove();
   }
 
   _setEventListeners(){
-    this._cardButtonLike.addEventListener('click', () => this._cardButtonLike.classList.toggle('card__like_active'));
-    this._cardButtonRemove.addEventListener('click', () => this._element.remove());
+    this._cardButtonLike.addEventListener('click', this._liked.bind(this));
+    this._cardButtonRemove.addEventListener('click', this._removeElement.bind(this));
     this._cardPicture.addEventListener('click', this._openPicture.bind(this));
   }
 

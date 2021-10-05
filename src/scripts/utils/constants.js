@@ -1,5 +1,4 @@
 export const popupProfileEditor = document.querySelector('#popup_profile-editor');
-export const popupAddCard = document.querySelector('#popup_add-card');
 export const popupPicture = document.querySelector('#popup_picture');
 export const buttonPopupProfileEditor = document.querySelector('.profile__button-edit');
 export const buttonPopupAddCard = document.querySelector('.profile__button-add');
@@ -16,7 +15,8 @@ export const profileFormProperties = {
   errorClassInput:'form__input_type_error',
   errorList: Array.from(formProfile.querySelectorAll('.form__error')),
   inputName: formProfile.querySelector('input[name="name"]'),
-  inputAboutMe: formProfile.querySelector('input[name="aboutMe"]')
+  inputAboutMe: formProfile.querySelector('input[name="aboutMe"]'),
+  inactiveButtonClass: 'form__submit_inactive'
 };
 export const cards = document.querySelector('.cards');
 export const cardTemplate = '#card';
@@ -29,5 +29,6 @@ export const formAddCardProperties = {
   errorClassInput:'form__input_type_error',
   errorList: Array.from(formAddCard.querySelectorAll('.form__error')),
   inputLocation: formAddCard.querySelector('input[name="location"]'),
-  inputLink: formAddCard.querySelector('input[name="link"]')
+  inputLink: formAddCard.querySelector('input[name="link"]'),
+  inactiveButtonClass: 'form__submit_inactive'
 };
