@@ -36,8 +36,12 @@ const formAddCardValidation = new ValidationForm(formAddCardProperties);
 formAddCardValidation.enableValidation();
 
 // СОЗДАНИЕ КАРТОЧЕК
+const handleCardClick = (name, link) => {
+  popupImage.open({nameImage:name, linkImage:link});
+}
+
 const creatingCard = (item) => {
-  return new Card(item, cardTemplate, popupImage.open);
+  return new Card(item, cardTemplate, handleCardClick);
 };
 
 initialCards.forEach((item) => {

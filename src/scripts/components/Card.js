@@ -15,7 +15,7 @@ export default class Card {
     return cardElement;
   }
   _openPicture(){
-    this._handleCardClick({nameImage:this.name, linkImage:this.link});
+    this._handleCardClick(this.name, this.link);
   }
 
   _liked(){
