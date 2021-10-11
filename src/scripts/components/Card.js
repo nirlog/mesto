@@ -1,9 +1,9 @@
 export default class Card {
-  constructor(item, cardSelector, popupWithImage){
+  constructor(item, cardSelector, handleCardClick){
     this.name = item.name;
     this.link = item.link;
     this._cardSelector = cardSelector;
-    this._popupWithImage = popupWithImage;
+    this._handleCardClick = handleCardClick;
 
   }
 
@@ -15,8 +15,7 @@ export default class Card {
     return cardElement;
   }
   _openPicture(){
-
-    this._popupWithImage.open({nameImage:this.name, linkImage:this.link});
+    this._handleCardClick({nameImage:this.name, linkImage:this.link});
   }
 
   _liked(){

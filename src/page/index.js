@@ -26,16 +26,18 @@ const popupAddCard = document.querySelector('#popup_add-card');
 
 const popupImage = new PopupWithImage(popupPicture);
 popupImage.setEventListeners();
+
 // ВАЛИДАЦИЯ
 const profileFormValidation = new ValidationForm(profileFormProperties);
 profileFormValidation.enableValidation();
+
 
 const formAddCardValidation = new ValidationForm(formAddCardProperties);
 formAddCardValidation.enableValidation();
 
 // СОЗДАНИЕ КАРТОЧЕК
 const creatingCard = (item) => {
-  return new Card(item, cardTemplate, popupImage);
+  return new Card(item, cardTemplate, popupImage.open);
 };
 
 initialCards.forEach((item) => {
