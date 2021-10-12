@@ -74,7 +74,7 @@ buttonPopupProfileEditor.addEventListener('click', openFormProfileEditing);
 
 const addNewLocation = new Section ({
   renderer: (item) => {
-    const creatingNewCard = new Card (item, cardTemplate, popupImage);
+    const creatingNewCard = new Card (item, cardTemplate, handleCardClick);
     const cardElement = creatingNewCard.generateCard();
     addNewLocation.addItem(cardElement);
   }
