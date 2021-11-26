@@ -15,7 +15,7 @@ export const profileFormProperties = {
   errorClassInput:'form__input_type_error',
   errorList: Array.from(formProfile.querySelectorAll('.form__error')),
   inputName: formProfile.querySelector('input[name="name"]'),
-  inputAboutMe: formProfile.querySelector('input[name="aboutMe"]'),
+  inputAboutMe: formProfile.querySelector('input[name="about"]'),
   inactiveButtonClass: 'form__submit_inactive'
 };
 export const cards = document.querySelector('.cards');

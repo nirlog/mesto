@@ -44,9 +44,9 @@ const creatingCard = (item) => {
   return new Card(item, cardTemplate, handleCardClick);
 };
 
-initialCards.forEach((item) => {
-  cards.prepend(creatingCard(item).generateCard());
-});
+// initialCards.forEach((item) => {
+//   cards.prepend(creatingCard(item).generateCard());
+// });
 
 
 // ПРОФИЛЬ
@@ -97,3 +97,36 @@ const popupFormAddCard = new PopupWithForm(popupAddCard, handlerFormAddCard);
 popupFormAddCard.setEventListeners();
 
 buttonPopupAddCard.addEventListener('click', () => popupFormAddCard.open());
+
+fetch('https://mesto.nomoreparties.co/v1/cohort-30/cards', {
+  headers: {
+    authorization: 'd212ae53-16c4-4655-af75-395db9babc88'
+  }
+})
+.then(res => res.json())
+.then((result) => {
+  console.log(result);
+  result.forEach((item) => {
+    cards.prepend(creatingCard(item).generateCard());
+  });
+
+})
+.catch((err) => {
+  console.log('Ошибка GET/cards: ' + err);
+});
+
+
+
+
+fetch('https://mesto.nomoreparties.co/v1/cohort-30/users/me', {
+  headers: {
+    authorization: 'd212ae53-16c4-4655-af75-395db9babc88'
+  }
+})
+.then(res => res.json())
+.then((result) => {
+  userInfo.setUserInfo(result);
+})
+.catch((err) => {
+  console.log('Ошибка GET/usersMe: ' + err);
+});
