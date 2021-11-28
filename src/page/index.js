@@ -71,7 +71,7 @@ Promise.all([api.getCards(), api.getUser()])
 /* колбэк при отправке формы Профиля */
 const handleFormProfileEditing = (e) => {
   e.preventDefault();
-  arrayFormProfile.buttonSubmitForm.textContent = 'Загрузка...';
+  arrayFormProfile.buttonSubmitForm.textContent = 'Сохранение...';
   arrayFormProfile.buttonSubmitForm.setAttribute('disabled', true);
   api.patchUser({
       name: arrayFormProfile.inputName.value,
