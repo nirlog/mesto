@@ -11,6 +11,7 @@ module.exports = {
     filename: '[name].[contenthash].js',
         publicPath: ''
   },
+  devtool: 'eval-source-map',
   mode: 'development',
   devServer: {
     static: {

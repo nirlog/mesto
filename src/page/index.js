@@ -21,7 +21,7 @@ import Card from '../scripts/components/Card';
 import Section from '../scripts/components/Section';
 import PopupWithImage from '../scripts/components/PopupWithImage';
 import UserInfo from '../scripts/components/UserInfo';
-import Popup from '../scripts/components/Popup';
+import PopupWithConfirmation from '../scripts/components/PopupWithConfirmation';
 
 
 //API
@@ -35,8 +35,6 @@ const api  = new Api({
 
 //КЛАССЫ
 const userInfo = new UserInfo(selectorProfile);
-const popupProfile = new PopupWithForm(arrayPopupProfile, handleFormProfileEditing);
-const popupDeleteCard = new Popup(arrayPopupDeleteCard);
 
 //SECTION
 const addNewLocation = new Section({
@@ -73,6 +71,8 @@ const handleFormProfileEditing = (e) => {
   e.preventDefault();
   arrayFormProfile.buttonSubmitForm.textContent = 'Сохранение...';
   arrayFormProfile.buttonSubmitForm.setAttribute('disabled', true);
+  arrayFormProfile.buttonSubmitForm.classList.add('loading');
+
   api.patchUser({
       name: arrayFormProfile.inputName.value,
       about: arrayFormProfile.inputAbout.value
@@ -81,16 +81,20 @@ const handleFormProfileEditing = (e) => {
         userInfo.setUserInfo(dataUser);
         userInfo.setUserAvatar(dataUser);
         arrayFormProfile.buttonSubmitForm.textContent = 'Готово';
+      })
+      .catch(err => console.log(err)).finally(() => {
+
         setTimeout(popupProfile.close(), 500);
         setTimeout(() => {
           arrayFormProfile.buttonSubmitForm.removeAttribute('disabled');
+          arrayFormProfile.buttonSubmitForm.classList.remove('loading');
           arrayFormProfile.buttonSubmitForm.textContent = 'Сохранить';
         }, 500);
-      })
-      .catch(err => console.log(err));
+      });
 
 }
 
+const popupProfile = new PopupWithForm(arrayPopupProfile, handleFormProfileEditing);
 popupProfile.setEventListeners();
 
 /* открытие popup с формой Профиля */
@@ -111,20 +115,22 @@ arrayPopupProfile.buttonOpenPopup.addEventListener('click', handleOpenPopupProfi
 /* колбэк при отправке формы Аватарки */
 const handleFormAvatarEditing = (e) => {
   e.preventDefault();
-  arrayFormAvatar.buttonSubmitForm.textContent = 'Загрузка...';
+  arrayFormAvatar.buttonSubmitForm.textContent = 'Сохранение...';
   arrayFormAvatar.buttonSubmitForm.setAttribute('disabled', true);
+  arrayFormAvatar.buttonSubmitForm.classList.add('loading');
   api.patchAvatar({link: arrayFormAvatar.inputLink.value})
       .then((dataUser) => {
         userInfo.setUserAvatar(dataUser);
         arrayFormAvatar.buttonSubmitForm.textContent = 'Готово';
+      })
+      .catch(err => console.log(err))
+      .finally(() =>{
         setTimeout(popupAvatar.close(), 500);
         setTimeout(() => {
-          arrayFormAvatar.buttonSubmitForm.removeAttribute('disabled');
+          arrayFormAvatar.buttonSubmitForm.classList.remove('loading');
           arrayFormAvatar.buttonSubmitForm.textContent = 'Сохранить';
         }, 500);
-
-      })
-      .catch(err => console.log(err));
+      });
 }
 
 const popupAvatar = new PopupWithForm(arrayPopupAvatar, handleFormAvatarEditing);
@@ -135,7 +141,7 @@ arrayPopupAvatar.buttonOpenPopup.addEventListener('click', () => popupAvatar.ope
 
 
 //POPUP IMAGE CARD
-const popupImage = new PopupWithImage(arrayPopupOpenPicture);
+const popupImage = new PopupWithImage(arrayPopupOpenPicture, );
 popupImage.setEventListeners();
 
 
@@ -157,30 +163,46 @@ const handleLikeClick = (card) => {
 
 }
 
+
+// удаление
+const handleCardDelete = (e, card) => {
+  e.preventDefault();
+  e.target.textContent = 'Удаляем...';
+  e.target.setAttribute('disabled', true);
+  e.target.classList.add('loading');
+  api.deleteCard(card.cardId).then((result) => {
+    card.removeElement();
+    e.target.textContent = result.message;
+  })
+  .catch(err => console.log(err))
+  .finally(() => {
+    setTimeout(popupDeleteCard.close(), 500);
+    setTimeout(() => {
+      e.target.removeAttribute('disabled');
+      e.target.classList.remove('loading');
+
+      e.target.textContent = 'Да';
+    }, 500);
+  });
+}
+
+const popupDeleteCard = new PopupWithConfirmation(arrayPopupDeleteCard, handleCardDelete);
+popupDeleteCard.setEventListeners();
+
 // колбэк удаление карточки
 const handleDeleteClick = (card) => {
-  popupDeleteCard.open();
-  arrayPopupDeleteCard.buttonSubmitForm.addEventListener('click', (e) => {
-    e.preventDefault();
-    arrayPopupDeleteCard.buttonSubmitForm.textContent = 'Удаляем...';
-    arrayPopupDeleteCard.buttonSubmitForm.setAttribute('disabled', true);
-
-    api.deleteCard(card.cardId).then((result) => {
-      card.removeElement();
-      arrayPopupDeleteCard.buttonSubmitForm.textContent = result.message;
-      setTimeout(popupDeleteCard.close(), 500);
-      setTimeout(() => {
-        arrayPopupDeleteCard.buttonSubmitForm.removeAttribute('disabled');
-        arrayPopupDeleteCard.buttonSubmitForm.textContent = 'Да';
-      }, 500);
-    })
-    .catch(err => console.log(err));
-  })
+  popupDeleteCard.open(card);
 };
 
 // создание корточек
 const creatingCard = (item) => {
-  return new Card({item: {...item, currentUser: userId}, handleCardClick: handleCardClick, handleLikeClick: handleLikeClick, handleDeleteClick: handleDeleteClick}, cardTemplate);
+  return new Card(
+    {
+      item: {...item, currentUser: userId},
+      handleCardClick: handleCardClick,
+      handleLikeClick: handleLikeClick,
+      handleDeleteClick: handleDeleteClick
+    }, cardTemplate);
 };
 
 // открытие формы добавления корточки
@@ -189,8 +211,9 @@ arrayPopupAddCard.buttonOpenPopup.addEventListener('click', () => popupAddCard.o
 // колбэк добавления карточки
 const handleFormAddCard = (e) => {
   e.preventDefault();
-  arrayFormAddCard.buttonSubmitForm.textContent = 'Загрузка...';
+  arrayFormAddCard.buttonSubmitForm.textContent = 'Сохранение...';
   arrayFormAddCard.buttonSubmitForm.setAttribute('disabled', true);
+  arrayFormAddCard.buttonSubmitForm.classList.add('loading');
   api.addCard({
         name: arrayFormAddCard.inputLocation.value,
         link: arrayFormAddCard.inputLink.value
@@ -199,13 +222,15 @@ const handleFormAddCard = (e) => {
         const cardElement = creatingCard(item).generateCard();
         addNewLocation.addItem(cardElement);
         arrayFormAddCard.buttonSubmitForm.textContent = 'Готово';
+      })
+      .catch(err => console.log(err)).finally(() => {
         setTimeout(popupAddCard.close(), 500);
         setTimeout(() => {
           arrayFormAddCard.buttonSubmitForm.removeAttribute('disabled');
-          arrayFormAddCard.buttonSubmitForm.textContent = 'Сохранить';
+          arrayFormAddCard.buttonSubmitForm.classList.remove('loading');
+          arrayFormAddCard.buttonSubmitForm.textContent = 'Создать';
         }, 500);
-      })
-      .catch(err => console.log(err));
+      });
 
   arrayFormAddCard.selectorForm.reset();
   formAddCardValidation.disableButtonForm();

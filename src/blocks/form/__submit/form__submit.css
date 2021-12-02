@@ -1,5 +1,6 @@
 .form__submit {
   width: 100%;
+  min-width: 358px;
   margin-top: 30px;
   box-sizing: border-box;
   min-height: 50px;
@@ -24,10 +25,19 @@
   cursor: default;
 }
 
+.form__submit.loading:disabled, .form__submit.loading:disabled:hover {
+  background-color: #000000;
+  color: #ffffff;
+  opacity: 1;
+  border: 0;
+  cursor: default;
+}
+
 @media screen and (max-width: 500px) {
   .form__submit {
     font-size: 14px;
     line-height: 17px;
     min-height: 48px;
+    min-width: 240px;
   }
 }

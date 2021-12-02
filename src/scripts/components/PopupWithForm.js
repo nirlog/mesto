@@ -7,6 +7,7 @@ export default class PopupWithForm extends Popup {
     this.wrapperSubmitForm = (e) => this._submitForm.call(this, e);
   }
 
+
   close(){
     super.close();
   }
