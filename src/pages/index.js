@@ -225,20 +225,18 @@ const handleFormAddCard = (e, dataCard) => {
         const cardElement = creatingCard(item).generateCard();
         addNewLocation.addItem(cardElement);
         arrayFormAddCard.buttonSubmitForm.textContent = 'Готово';
-        arrayFormAddCard.buttonSubmitForm.removeAttribute('disabled');
         arrayFormAddCard.buttonSubmitForm.classList.remove('loading');
-        setTimeout(()=>{popupAddCard.close()}, 500);
+        setTimeout(()=>{
+          popupAddCard.close();
+          formAddCardValidation.disableButtonForm();
+        }, 500);
       })
       .catch(err => console.log(err))
       .finally(() => {
-
         setTimeout(() => {
           arrayFormAddCard.buttonSubmitForm.textContent = 'Создать';
         }, 1000);
       });
-
-  arrayFormAddCard.formElement.reset();
-  formAddCardValidation.disableButtonForm();
 };
 
 

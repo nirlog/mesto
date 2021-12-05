@@ -14,8 +14,8 @@ export default class PopupWithForm extends Popup {
   }
 
   _getInputValues(){
-    let formValues = {};
-    this._inputList.forEach((input) => formValues[input.name] = input.value);
+    const formValues = {};
+    this._inputList.forEach((input) => formValues[input.name] = input.value); // <-- А это не является перезаписью?
     return formValues;
   }
 
