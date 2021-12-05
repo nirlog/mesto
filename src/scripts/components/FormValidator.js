@@ -1,6 +1,6 @@
-export default class ValidationForm {
+export default class FormValidator {
   constructor (form){
-    this._selectorForm = form.selectorForm;
+    this._form = form.formElement;
     this._inputList = form.inputList;
     this._classErrorText = form.classErrorText;
     this._classErrorInput = form.classErrorInput;
@@ -11,12 +11,12 @@ export default class ValidationForm {
 
   _showInputError(inputItem, errorClass, errorMessage) {
     inputItem.classList.add(this._classErrorInput);
-    this._selectorForm.querySelector('.' + errorClass).textContent = errorMessage;
+    this._form.querySelector('.' + errorClass).textContent = errorMessage;
   };
 
   _hideInputError(inputItem, errorClass){
       inputItem.classList.remove(this._classErrorInput);
-      this._selectorForm.querySelector('.' + errorClass).textContent = '';
+      this._form.querySelector('.' + errorClass).textContent = '';
   };
 
   _isValid(inputItem){

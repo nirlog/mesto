@@ -5,7 +5,7 @@ import {
   arrayFormProfile,
   arrayPopupAvatar,
   arrayFormAvatar,
-  selectorProfile,
+  elementProfile,
   arrayFormAddCard,
   arrayPopupAddCard,
   arrayPopupOpenPicture,
@@ -16,7 +16,7 @@ import {
 
 import Api from '../scripts/components/Api.js';
 import PopupWithForm from '../scripts/components/PopupWithForm.js';
-import ValidationForm from '../scripts/components/ValidationForm.js';
+import ValidationForm from '../scripts/components/FormValidator.js';
 import Card from '../scripts/components/Card';
 import Section from '../scripts/components/Section';
 import PopupWithImage from '../scripts/components/PopupWithImage';
@@ -34,7 +34,7 @@ const api  = new Api({
 });
 
 //КЛАССЫ
-const userInfo = new UserInfo(selectorProfile);
+const userInfo = new UserInfo(elementProfile);
 
 //SECTION
 const addNewLocation = new Section({
@@ -67,29 +67,28 @@ Promise.all([api.getCards(), api.getUser()])
 
 
 /* колбэк при отправке формы Профиля */
-const handleFormProfileEditing = (e) => {
+const handleFormProfileEditing = (e, formValues) => {
   e.preventDefault();
   arrayFormProfile.buttonSubmitForm.textContent = 'Сохранение...';
   arrayFormProfile.buttonSubmitForm.setAttribute('disabled', true);
   arrayFormProfile.buttonSubmitForm.classList.add('loading');
-
   api.patchUser({
-      name: arrayFormProfile.inputName.value,
-      about: arrayFormProfile.inputAbout.value
+      name: formValues.name,
+      about: formValues.about
     })
       .then((dataUser) => {
         userInfo.setUserInfo(dataUser);
         userInfo.setUserAvatar(dataUser);
         arrayFormProfile.buttonSubmitForm.textContent = 'Готово';
+        setTimeout(() => {popupProfile.close()}, 500);
       })
-      .catch(err => console.log(err)).finally(() => {
-
-        setTimeout(popupProfile.close(), 500);
+      .catch(err => console.log(err))
+      .finally(() => {
         setTimeout(() => {
           arrayFormProfile.buttonSubmitForm.removeAttribute('disabled');
           arrayFormProfile.buttonSubmitForm.classList.remove('loading');
           arrayFormProfile.buttonSubmitForm.textContent = 'Сохранить';
-        }, 500);
+        }, 1000);
       });
 
 }
@@ -97,15 +96,13 @@ const handleFormProfileEditing = (e) => {
 const popupProfile = new PopupWithForm(arrayPopupProfile, handleFormProfileEditing);
 popupProfile.setEventListeners();
 
+
 /* открытие popup с формой Профиля */
 const handleOpenPopupProfile = () => {
-    api.getUser()
-        .then((dataUser) => {
+          const dataUser = userInfo.getUserInfo();
           arrayFormProfile.inputName.value = dataUser.name;  // Заполняем поле формы, inputName
           arrayFormProfile.inputAbout.value = dataUser.about;  // Заполняем поле формы, inputAbout
           popupProfile.open();
-        })
-        .catch(err => console.log(err));
 };
 
 /* вешаем обрабочик на кнопку открытия PopupProfile */
@@ -113,23 +110,23 @@ arrayPopupProfile.buttonOpenPopup.addEventListener('click', handleOpenPopupProfi
 
 
 /* колбэк при отправке формы Аватарки */
-const handleFormAvatarEditing = (e) => {
+const handleFormAvatarEditing = (e, dataUser) => {
   e.preventDefault();
   arrayFormAvatar.buttonSubmitForm.textContent = 'Сохранение...';
   arrayFormAvatar.buttonSubmitForm.setAttribute('disabled', true);
   arrayFormAvatar.buttonSubmitForm.classList.add('loading');
-  api.patchAvatar({link: arrayFormAvatar.inputLink.value})
+  api.patchAvatar({link: dataUser.link})
       .then((dataUser) => {
         userInfo.setUserAvatar(dataUser);
         arrayFormAvatar.buttonSubmitForm.textContent = 'Готово';
+        setTimeout(() =>{popupAvatar.close()}, 500);
       })
       .catch(err => console.log(err))
       .finally(() =>{
-        setTimeout(popupAvatar.close(), 500);
         setTimeout(() => {
           arrayFormAvatar.buttonSubmitForm.classList.remove('loading');
           arrayFormAvatar.buttonSubmitForm.textContent = 'Сохранить';
-        }, 500);
+        }, 1000);
       });
 }
 
@@ -137,7 +134,10 @@ const popupAvatar = new PopupWithForm(arrayPopupAvatar, handleFormAvatarEditing)
 popupAvatar.setEventListeners();
 
 // открытие формы смены аватара
-arrayPopupAvatar.buttonOpenPopup.addEventListener('click', () => popupAvatar.open());
+arrayPopupAvatar.buttonOpenPopup.addEventListener('click', () => {
+  avatarFormValidation.clearValidation();
+  popupAvatar.open();
+});
 
 
 //POPUP IMAGE CARD
@@ -167,22 +167,22 @@ const handleLikeClick = (card) => {
 // удаление
 const handleCardDelete = (e, card) => {
   e.preventDefault();
-  e.target.textContent = 'Удаляем...';
-  e.target.setAttribute('disabled', true);
-  e.target.classList.add('loading');
+
+  arrayPopupDeleteCard.buttonSubmitForm.textContent = 'Удаляем...';
+  arrayPopupDeleteCard.buttonSubmitForm.setAttribute('disabled', true);
+  arrayPopupDeleteCard.buttonSubmitForm.classList.add('loading');
   api.deleteCard(card.cardId).then((result) => {
     card.removeElement();
-    e.target.textContent = result.message;
+    arrayPopupDeleteCard.buttonSubmitForm.textContent = result.message;
+    setTimeout(() =>{popupDeleteCard.close()}, 500);
   })
   .catch(err => console.log(err))
   .finally(() => {
-    setTimeout(popupDeleteCard.close(), 500);
+    arrayPopupDeleteCard.buttonSubmitForm.removeAttribute('disabled');
+    arrayPopupDeleteCard.buttonSubmitForm.classList.remove('loading');
     setTimeout(() => {
-      e.target.removeAttribute('disabled');
-      e.target.classList.remove('loading');
-
-      e.target.textContent = 'Да';
-    }, 500);
+      arrayPopupDeleteCard.buttonSubmitForm.textContent = 'Да';
+    }, 1000);
   });
 }
 
@@ -206,33 +206,38 @@ const creatingCard = (item) => {
 };
 
 // открытие формы добавления корточки
-arrayPopupAddCard.buttonOpenPopup.addEventListener('click', () => popupAddCard.open());
+arrayPopupAddCard.buttonOpenPopup.addEventListener('click', () => {
+  formAddCardValidation.clearValidation();
+  popupAddCard.open();
+});
 
 // колбэк добавления карточки
-const handleFormAddCard = (e) => {
+const handleFormAddCard = (e, dataCard) => {
   e.preventDefault();
   arrayFormAddCard.buttonSubmitForm.textContent = 'Сохранение...';
   arrayFormAddCard.buttonSubmitForm.setAttribute('disabled', true);
   arrayFormAddCard.buttonSubmitForm.classList.add('loading');
   api.addCard({
-        name: arrayFormAddCard.inputLocation.value,
-        link: arrayFormAddCard.inputLink.value
+        name: dataCard.location,
+        link: dataCard.link
       })
       .then((item) => {
         const cardElement = creatingCard(item).generateCard();
         addNewLocation.addItem(cardElement);
         arrayFormAddCard.buttonSubmitForm.textContent = 'Готово';
+        arrayFormAddCard.buttonSubmitForm.removeAttribute('disabled');
+        arrayFormAddCard.buttonSubmitForm.classList.remove('loading');
+        setTimeout(()=>{popupAddCard.close()}, 500);
       })
-      .catch(err => console.log(err)).finally(() => {
-        setTimeout(popupAddCard.close(), 500);
+      .catch(err => console.log(err))
+      .finally(() => {
+
         setTimeout(() => {
-          arrayFormAddCard.buttonSubmitForm.removeAttribute('disabled');
-          arrayFormAddCard.buttonSubmitForm.classList.remove('loading');
           arrayFormAddCard.buttonSubmitForm.textContent = 'Создать';
-        }, 500);
+        }, 1000);
       });
 
-  arrayFormAddCard.selectorForm.reset();
+  arrayFormAddCard.formElement.reset();
   formAddCardValidation.disableButtonForm();
 };
 

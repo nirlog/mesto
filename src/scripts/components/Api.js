@@ -1,19 +1,19 @@
-function onResponce(res){
-  return res.ok ? res.json() : Promise.Promise.reject(`Ошибка method: ${res}`)
-}
-
 export default class Api {
   constructor({url, headers}) {
     this._url = url;
     this._headers = headers;
 
   }
+  _checkResponse(res){
+    return res.ok ? res.json() : Promise.reject(`Ошибка method: ${res}`);
+  }
+
 
   getUser() {
     return fetch(`${this._url}/users/me`, {
       method: 'GET',
       headers: this._headers})
-      .then(onResponce);
+      .then(this._checkResponse);
   }
 
   patchUser(body) {
@@ -22,7 +22,7 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(body)
     })
-      .then(onResponce);
+      .then(this._checkResponse);
   }
 
   patchAvatar({link}) {
@@ -33,14 +33,14 @@ export default class Api {
         avatar: link
       })
     })
-      .then(onResponce);
+      .then(this._checkResponse);
   }
 
   getCards() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
       headers: this._headers})
-      .then(onResponce);
+      .then(this._checkResponse);
   }
 
   addCard(body) {
@@ -49,22 +49,20 @@ export default class Api {
       headers: this._headers,
       body: JSON.stringify(body)
     })
-      .then(onResponce);
+      .then(this._checkResponse);
   }
 
   deleteCard(cardId) {
     return fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers})
-      .then(onResponce);
+      .then(this._checkResponse);
   }
 
   toggleCardLike(cardId, method) {
     return fetch(`${this._url}/cards/likes/${cardId}`, {
       method: method,
       headers: this._headers})
-      .then(onResponce);
+      .then(this._checkResponse);
   }
 }
-
-
